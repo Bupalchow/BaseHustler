@@ -8,16 +8,18 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { ArrowRight, Github, Linkedin, Twitter } from 'lucide-react'
 import { auth, googleProvider, signInWithEmailAndPassword, signInWithPopup } from "@/lib/firebaseConfig" 
+import { useRouter } from 'next/navigation'
 
 export default function LoginPageComponent() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const router = useRouter()
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password)
       console.log('Login successful:', userCredential.user)
-      alert("Login successful")
+      router.push('/dashboard')
     } catch (error) {
       console.error('Login error:', error)
       alert("Invalid email or password")
@@ -29,7 +31,7 @@ export default function LoginPageComponent() {
     try {
       const result = await signInWithPopup(auth, googleProvider)
       console.log('Google sign-in successful:', result.user)
-      alert("Google sign-in successful")
+      router.push('/dashboard')
     } catch (error) {
       console.error('Google sign-in error:', error)
       alert("Google sign-in failed")

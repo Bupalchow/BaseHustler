@@ -7,10 +7,9 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { ArrowRight, Github, Linkedin, Twitter } from 'lucide-react'
-
-// Firebase imports
 import { auth, googleProvider } from '@/lib/firebaseConfig';
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { useRouter } from 'next/navigation'
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -20,7 +19,7 @@ export default function SignupPage() {
     confirmPassword: '',
   });
   const [error, setError] = useState('');
-
+  const router = useRouter()
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -39,6 +38,7 @@ export default function SignupPage() {
       await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       alert(`Account created successfully for ${formData.username}`);
       console.log('User created:', formData);
+      router.push('/dashboard')
     } catch (error: any) {
       setError(error.message);
       alert(`Error: ${error.message}`);
@@ -48,7 +48,7 @@ export default function SignupPage() {
   const handleGoogleSignUp = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      alert('Successfully signed in with Google!');
+      router.push('/dashboard')
     } catch (error: any) {
       setError(error.message);
       alert(`Error: ${error.message}`);

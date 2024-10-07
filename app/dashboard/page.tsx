@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { ArrowUpRight, Briefcase, DollarSign, Star, Clock, ChevronRight } from 'lucide-react'
-
+import { withAuth } from '@/components/withAuth';
 const earningsData = [
   { name: 'Jan', amount: 1200 },
   { name: 'Feb', amount: 1800 },
@@ -17,6 +17,19 @@ const earningsData = [
   { name: 'May', amount: 3200 },
   { name: 'Jun', amount: 3800 },
 ]
+interface StatCardProps {
+  title: string;
+  value: string | number;
+  icon: React.ElementType;
+  change: number;
+}
+interface Project {
+
+  title: string;
+  client: string;
+  status: string;
+  dueDate: string;
+}
 
 const projectData = [
   { id: 1, title: 'DeFi Dashboard UI', client: 'CryptoFin', dueDate: '2023-07-15', status: 'In Progress' },
@@ -24,7 +37,7 @@ const projectData = [
   { id: 3, title: 'Smart Contract Audit', client: 'SecureChain', dueDate: '2023-07-20', status: 'Review' },
 ]
 
-const StatCard = ({ title, value, icon: Icon, change }) => (
+const StatCard: React.FC<StatCardProps> = ({ title, value, icon: Icon, change }) => (
   <Card>
     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
       <CardTitle className="text-sm font-medium">{title}</CardTitle>
@@ -33,13 +46,13 @@ const StatCard = ({ title, value, icon: Icon, change }) => (
     <CardContent>
       <div className="text-2xl font-bold">{value}</div>
       <p className="text-xs text-muted-foreground">
-        {change > 0 ? '+' : ''}{change}% from last month
+        {change > 0 ? `+${change}%` : `${change}%`} since last month
       </p>
     </CardContent>
   </Card>
 )
 
-const ProjectCard = ({ project }) => (
+const ProjectCard = ({ project }: { project: Project }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -70,7 +83,7 @@ const ProjectCard = ({ project }) => (
   </motion.div>
 )
 
-export default function DashboardComponent() {
+function DashboardComponent() {
   const [selectedTab, setSelectedTab] = useState('overview')
 
   return (
@@ -169,3 +182,6 @@ export default function DashboardComponent() {
     </div>
   )
 }
+
+
+export default withAuth(DashboardComponent);
