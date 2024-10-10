@@ -6,6 +6,25 @@ import { motion } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Menu, X } from 'lucide-react'
 
+import '@rainbow-me/rainbowkit/styles.css';
+import {
+  getDefaultConfig,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
+import { WagmiProvider } from 'wagmi';
+import {
+  mainnet,
+  optimism,
+  baseSepolia,
+  base,
+} from 'wagmi/chains';
+import {
+  QueryClientProvider,
+  QueryClient,
+} from "@tanstack/react-query";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
+
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/functions", label: "Functions" },
@@ -25,9 +44,19 @@ const NavItem = ({ href, children }: { href: string; children: React.ReactNode }
 )
 
 export function NavBar() {
+  const queryClient = new QueryClient();
+  const config = getDefaultConfig({
+    appName: 'BaseHustler',
+    projectId: '1',
+    chains: [mainnet, baseSepolia, optimism, base],
+    ssr: true, 
+  });
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
+    <WagmiProvider config={config}>
+    <QueryClientProvider client={queryClient}>
+      <RainbowKitProvider>
     <div>
     <header className="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-md">
     <nav className="container mx-auto px-6 py-4">
@@ -39,21 +68,8 @@ export function NavBar() {
         >
           <a href="#" className="text-2xl font-bold">BaseHustler</a>
         </motion.div>
-        <div className="hidden md:flex space-x-8 list-none">
-          <NavItem href="#home">Home</NavItem>
-          <NavItem href="#functions">Functions</NavItem>
-          <NavItem href="#about">About</NavItem>
-          <NavItem href="#contact">Contact</NavItem>
-        </div>
-        <div className="md:hidden">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X className="text-violet-400" /> : <Menu className="text-violet-400" />}
-          </Button>
+        <div className="flex space-x-8">
+        <ConnectButton />          
         </div>
       </div>
     </nav>
@@ -77,5 +93,8 @@ export function NavBar() {
         </motion.div>
       )}
   </div>
+  </RainbowKitProvider>
+  </QueryClientProvider>
+</WagmiProvider>
   )
 }
