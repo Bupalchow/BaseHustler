@@ -33,7 +33,7 @@ export function NavBar() {
   const queryClient = new QueryClient();
   const config = getDefaultConfig({
     appName: 'BaseHustler',
-    projectId: '1',
+    projectId: '123456',
     chains: [mainnet, baseSepolia, optimism, base],
     ssr: true, 
   });

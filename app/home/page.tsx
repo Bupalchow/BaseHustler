@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Plus, DollarSign, Calendar, Briefcase } from 'lucide-react'
-import { AddTaskForm } from '@/components/AddTaskForm'
+import { AddTaskForm } from '@/components/add-task-form'
 
 interface Task {
   id: number
@@ -16,7 +16,6 @@ interface Task {
   deadline: string
 }
 
-// Sample task data
 const initialTasks: Task[] = [
   { id: 1, title: 'Create Smart Contract', description: 'Develop a smart contract for token distribution', budget: 500, deadline: '2023-07-30' },
   { id: 2, title: 'Design DApp Interface', description: 'Create a user-friendly interface for the decentralized application', budget: 800, deadline: '2023-08-15' },
@@ -56,7 +55,7 @@ const TaskCard = ({ task }: { task: Task }) => (
   </motion.div>
 )
 
-export function Index() {
+export default function Home() {
   const [tasks, setTasks] = useState<Task[]>(initialTasks)
   const [isFormVisible, setIsFormVisible] = useState(false)
 
@@ -70,7 +69,7 @@ export function Index() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-gray-900 text-white relative">
       <main className="container mx-auto px-4 py-8">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -86,20 +85,6 @@ export function Index() {
             <Plus className="mr-2 h-5 w-5" /> Add Task
           </Button>
         </motion.div>
-
-        <AnimatePresence>
-          {isFormVisible && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.3 }}
-              className="mb-8"
-            >
-              <AddTaskForm onSubmit={handleAddTask} onClose={() => setIsFormVisible(false)} />
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {tasks.map(task => (
@@ -120,6 +105,21 @@ export function Index() {
           </motion.div>
         )}
       </main>
+
+      {/* Overlay Add Task Form */}
+      <AnimatePresence>
+        {isFormVisible && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <AddTaskForm onSubmit={handleAddTask} onClose={() => setIsFormVisible(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

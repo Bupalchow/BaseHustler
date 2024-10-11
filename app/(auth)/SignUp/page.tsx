@@ -36,9 +36,8 @@ export default function SignupPage() {
 
     try {
       await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-      alert(`Account created successfully for ${formData.username}`);
       console.log('User created:', formData);
-      router.push('/dashboard')
+      router.push('/home')
     } catch (error: any) {
       setError(error.message);
       alert(`Error: ${error.message}`);
@@ -48,7 +47,7 @@ export default function SignupPage() {
   const handleGoogleSignUp = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      router.push('/dashboard')
+      router.push('/home')
     } catch (error: any) {
       setError(error.message);
       alert(`Error: ${error.message}`);

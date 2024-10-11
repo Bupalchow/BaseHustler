@@ -40,7 +40,7 @@ export function AddTaskForm({ onSubmit, onClose }: AddTaskFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    // Simulating an API call
+    // Simulate an API call
     await new Promise(resolve => setTimeout(resolve, 1500))
     onSubmit(newTask)
     setIsSubmitting(false)
@@ -56,8 +56,8 @@ export function AddTaskForm({ onSubmit, onClose }: AddTaskFormProps) {
   ]
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
-      <Card className="bg-gray-900 bg-opacity-80 border-gray-700 shadow-2xl overflow-hidden w-full max-w-5xl mx-auto backdrop-blur-md">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
+      <Card className="bg-gray-900 bg-opacity-90 border-gray-700 shadow-2xl w-full max-w-4xl mx-auto lg:max-w-lg md:max-w-md sm:max-w-full sm:mx-2 rounded-lg">
         <CardHeader className="bg-gray-800 bg-opacity-50 border-b border-gray-700 p-6">
           <div className="flex justify-between items-center">
             <CardTitle className="text-3xl font-bold text-violet-300">Add New Task</CardTitle>
@@ -88,7 +88,7 @@ export function AddTaskForm({ onSubmit, onClose }: AddTaskFormProps) {
             ))}
           </div>
         </CardHeader>
-        <CardContent className="p-8">
+        <CardContent className="p-6 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-8">
             <AnimatePresence mode="wait">
               <motion.div
@@ -108,7 +108,7 @@ export function AddTaskForm({ onSubmit, onClose }: AddTaskFormProps) {
                       value={newTask.title}
                       onChange={handleInputChange}
                       required
-                      className="bg-gray-800 bg-opacity-50 border-gray-600 text-white text-lg focus:ring-violet-500 focus:border-violet-500"
+                      className="bg-gray-800 bg-opacity-50 border-gray-600 text-white text-lg focus:ring-violet-500 focus:border-violet-500 w-full"
                       placeholder="Enter a clear and concise task title"
                     />
                   </div>
@@ -122,7 +122,7 @@ export function AddTaskForm({ onSubmit, onClose }: AddTaskFormProps) {
                       value={newTask.description}
                       onChange={handleInputChange}
                       required
-                      className="bg-gray-800 bg-opacity-50 border-gray-600 text-white text-lg focus:ring-violet-500 focus:border-violet-500"
+                      className="bg-gray-800 bg-opacity-50 border-gray-600 text-white text-lg focus:ring-violet-500 focus:border-violet-500 w-full"
                       placeholder="Provide a detailed description of the task"
                       rows={6}
                     />
@@ -138,7 +138,7 @@ export function AddTaskForm({ onSubmit, onClose }: AddTaskFormProps) {
                       value={newTask.budget}
                       onChange={handleInputChange}
                       required
-                      className="bg-gray-800 bg-opacity-50 border-gray-600 text-white text-lg focus:ring-violet-500 focus:border-violet-500"
+                      className="bg-gray-800 bg-opacity-50 border-gray-600 text-white text-lg focus:ring-violet-500 focus:border-violet-500 w-full"
                       placeholder="Enter the budget for this task"
                     />
                   </div>
@@ -153,7 +153,7 @@ export function AddTaskForm({ onSubmit, onClose }: AddTaskFormProps) {
                       value={newTask.deadline}
                       onChange={handleInputChange}
                       required
-                      className="bg-gray-800 bg-opacity-50 border-gray-600 text-white text-lg focus:ring-violet-500 focus:border-violet-500"
+                      className="bg-gray-800 bg-opacity-50 border-gray-600 text-white text-lg focus:ring-violet-500 focus:border-violet-500 w-full"
                     />
                   </div>
                 )}
