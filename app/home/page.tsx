@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Plus, DollarSign, Calendar, Briefcase } from 'lucide-react'
 import { AddTaskForm } from '@/components/add-task-form'
+import { NavBar } from '@/components/navbar'
 
 interface Task {
   id: number
@@ -69,8 +70,9 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white relative">
-      <main className="container mx-auto px-4 py-8">
+    <div className="flex flex-col min-h-screen bg-gray-900 text-white">
+      <div className='mb-16'><NavBar/></div>
+      <main className="flex-grow container mx-auto px-4 py-8">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
